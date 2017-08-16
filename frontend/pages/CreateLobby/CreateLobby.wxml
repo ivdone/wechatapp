@@ -1,0 +1,21 @@
+<!--CreateLobby.wxml-->
+<text>创建房间</text>
+    <form action="">
+      <picker range="{{array}}" value="{{index}}" bindchange="gameNumberChange">
+        <text class="picker">选择游戏人数:</text>
+        <text wx:if="{{array[index] < 10}}">{{" " + array[index]}}</text>
+        <text wx:else>{{array[index]}}</text>
+      </picker>
+      <text>已分配人数:</text>
+        <text wx:if="{{totalCount == array[index]}}" class="OkText">{{" " + totalCount}}</text>
+        <text wx:else class="errorText">{{" " + totalCount}}</text>
+      <view class="role-config" wx:for="{{config}}">
+        <image class="role-logo" src="{{item.role.logo}}"></image>
+        <picker id="{{index}}" range="{{itemArray}}" value="{{item.count}}" bindchange="roleNumberChange">
+        <text>{{item.role.name}} x </text>
+        <text class="picker" >{{" " + item.count}}</text>
+      </picker> 
+      </view>
+    </form>
+
+        <button type="primary" bindtap="CreateLobbyRequest">创建房间</button>

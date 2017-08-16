@@ -1,0 +1,9 @@
+<import src="../../templates/titlebar.wxml" />
+<import src="../../templates/playground.wxml" />
+<import src="../../templates/actionArea.wxml" />
+
+<view class="container">
+	<template is="titlebar" data="{{...titleObj}}"></template>
+	<template is="playground" data="{{...playersObj}}"></template>
+	<template is="action-area" data="{{...actionObj}}"></template>
+</view>

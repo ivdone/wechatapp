@@ -1,0 +1,27 @@
+/* CreateLobby.wxss */
+.container {
+  padding-bottom: 100rpx;
+}
+.setting {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.role-config {
+  margin-top: 24rpx;
+  flex-direction: row;
+}
+.role-logo {
+  width: 48rpx;
+  height: 48rpx;
+  border-radius: 50%;
+}
+.picker {
+  text-decoration: underline;
+}
+.errorText{
+  color: red;
+}
+.OkText{
+  color:green;
+}

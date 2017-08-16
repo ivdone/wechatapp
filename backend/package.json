@@ -1,0 +1,27 @@
+{
+  "name": "zhiboinfo",
+  "version": "1.0.0",
+  "description": "zhifo info from douyutv etc.",
+  "main": "index.js",
+  "scripts": {
+    "test": "TODO"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ivdone/wechatapp.git"
+  },
+  "keywords": [
+    "fe"
+  ],
+  "author": "zzhang",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ivdone/wechatapp/issues"
+  },
+  "homepage": "https://github.com/ivdone/wechatapp#readme",
+  "dependencies": {
+    "express": "^4.15.2",
+    "redis": "^2.7.1",
+    "ws": "^2.3.1"
+  }
+}

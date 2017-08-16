@@ -1,0 +1,10 @@
+@import "../../css/titlebar.wxss";
+@import "../../css/playground.wxss";
+@import "../../css/actionArea.wxss";
+
+.container {
+    justify-content: flex-start;
+    padding-top: 0;
+    padding-bottom: 0;
+    flex-grow: 1;
+}

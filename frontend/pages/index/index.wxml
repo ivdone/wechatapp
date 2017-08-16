@@ -1,0 +1,9 @@
+<!--index.wxml-->
+<view class="container">
+  <image class="logo" src="{{logo}}"></image>
+  <view class="btn">
+      <button type="primary" bindtap="CreateLobby">创建房间</button>
+    <button type="primary" bindtap="JoinLobby">加入房间</button>
+  </view>
+
+</view>
