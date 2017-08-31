@@ -1,10 +1,10 @@
 {
-  "name": "zhiboinfo",
+  "name": "wwbackend",
   "version": "1.0.0",
-  "description": "zhifo info from douyutv etc.",
-  "main": "index.js",
+  "description": "wwbackend",
+  "main": "app.js",
   "scripts": {
-    "test": "TODO"
+    "start": "node app.js"
   },
   "repository": {
     "type": "git",
@@ -20,8 +20,10 @@
   },
   "homepage": "https://github.com/ivdone/wechatapp#readme",
   "dependencies": {
+    "crypto": "^1.0.1",
     "express": "^4.15.2",
     "redis": "^2.7.1",
+    "request": "^2.81.0",
     "ws": "^2.3.1"
   }
 }

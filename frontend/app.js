@@ -1,5 +1,5 @@
 var eventbus = require("js/EventBus.js");
-
+const backEndUrl = "localhost:8080";
 //app.js
 App({
   onLaunch: function () {
@@ -15,18 +15,22 @@ App({
         console.log("(SystemInfo)" + "windowWidth: " + windowWidth + " windowHeight: " + windowHeight + " pxRatio: " + pxRatio);
       }.bind(this)
     });
-    wx.login(function(){
-      wx.getUserInfo({
-        success: function (res) {
-          this.globalData.userInfo = res.userInfo;
-        }.bind(this),
-        fail: function (error) {
-          console.log("failed to get user info:" + error);
-        }
-      });
+    var that = this;
+    wx.login({
+      success: function(res){
+        var decryptInfo = { wxcode: res.code };
+        wx.getUserInfo({
+          success: function (res) {
+            decryptInfo.encryptedData = res.encryptedData;
+            decryptInfo.iv = res.iv;
+            that.sendGetRequest("/playerInfo/decryptUserInfo", decryptInfo, that.initApp, function(){});
+          }.bind(this),
+          fail: function (error) {
+            console.log("failed to get user info:" + error);
+          }
+        });
+      }
     });
-    this.initSocket();
-
     eventbus.addEventListener("locationUpdate", function (event, location) {
       var message = {
         name: this.globalData.name,
@@ -57,30 +61,59 @@ App({
   }
   ,
   globalData: {
-    gameNumber: 8,
-    gameConfig: {},
-    name: "todo",
-    room: 1,
     userInfo: {
-            nickName: "p1",
-            avatarUrl: "", //todo
-            gender: 0,
-            province: "",
-            city: "",
-            country: ""
-          }
+      "openId": "OPENID",
+      "nickName": "NICKNAME",
+      "gender": "M",
+      "city": "CITY",
+      "province": "PROVINCE",
+      "country": "COUNTRY",
+      "avatarUrl": "AVATARURL",
+      "unionId": "UNIONID",
+      watermark: {
+        appid: "appid",
+      }
+    }
   },
-  initSocket: function () {
+  sendGetRequest: function(api, params, callback, failure) {
+    wx.request({
+      url: 'http://' + backEndUrl + api,
+      method: "GET",
+      data: params,
+      success: function(res) {
+        callback(res);
+      },
+      fail: function (res) {
+        failure();
+      }
+    })
+  },
+  sendPostRequest: function (api, params, callback, failure) {
+    wx.request({
+      url: 'https://' + backEndUrl + api,
+      method: "GET",
+      data: params,
+      success: function (res) {
+        callback(res);
+      },
+      fail: function(res) {
+        failure(res);
+      }
+    })
+  },
+  initApp: function (res) {
+    this.globalData.userInfo = res;
     wx.connectSocket({
-      url: "ws://localhost:8080"
+      url: "ws://" + backEndUrl
     });
     wx.onSocketOpen(function (res) {
       this.isSocketOpen = true;
       var initPlayer = {
         type: "userInfoInit",
         message: {
-        nickName: this.globalData.userInfo.nickName,
-        avatarUrl: this.globalData.userInfo.avatarUrl
+          openid: this.globalData.userInfo.watermark.openId,
+          nickName: this.globalData.userInfo.nickName,
+          avatarUrl: this.globalData.userInfo.avatarUrl
         }
       };
       wx.sendSocketMessage({

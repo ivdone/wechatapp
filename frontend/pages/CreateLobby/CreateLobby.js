@@ -24,12 +24,6 @@ Page({
   onLoad: function (options) {
     app.globalData.gameNumber = 8;
     app.globalData.gameConfig = configs[8];
-    eventbus.addEventListener("LobbyCreated", function (scope, lobbyInfo) {
-      wx.hideLoading();
-      wx.navigateTo({
-        url: "../Lobby/Lobby"
-      });
-    }, this);
   },
 
   /**
@@ -122,15 +116,23 @@ Page({
     var array = this.data.array;
     var number = array[index];
     var config = this.data.config;
-    app.globalData.gameNumber = number;
-    app.globalData.gameConfig = config;
     wx.showLoading({
       title: '正在创建房间',
     });
+    
+    eventbus.addEventListener("LobbyCreated", function (scope, lobbyInfo) {
+      wx.hideLoading();
+      wx.navigateTo({
+        url: "../Lobby/Lobby"
+      });
+    }, this);
+
     app.sendSocketMessage("createLobbyRequest",
-      app.globalData.gameConfig.map((role) => {
-        return {count:role.count, roleId:role.role.name};
-      })
+      { config : config.map((role) => {
+          return {count:role.count, roleId:role.role.name};
+        }),
+        totalCount: totalCount
+      }
     );
   }
 })
